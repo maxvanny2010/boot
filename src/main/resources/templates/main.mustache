@@ -15,9 +15,8 @@
     </form>
 </div>
 <div>Список сообщений</div>
-<form method="post" action="filter">
-    <input type="hidden" name="_csrf" value="{{_csrf.token}}">
-    <label> <input type="text" name="filter"/> </label>
+<form method="get" action="/main">
+    <label><input type="text" name="filter" value={{filter}}/> </label>
     <button type="submit">Выбрать</button>
 </form>
 <table>
@@ -25,12 +24,14 @@
         <th>id</th>
         <th>message</th>
         <th>tag</th>
+        <th>author</th>
     </tr>
     {{#messages}}
-        <tr>
+        <tr style="text-align: center">
             <TD><b>{{id}}</b></TD>
             <TD><span>{{text}}</span></TD>
             <TD><i>{{tag}}</i></TD>
+            <TD><strong>{{authorName}}</strong></TD>
         </tr>
     {{/messages}}
 </table>

@@ -2,9 +2,12 @@ package com.boot.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Message.
@@ -21,13 +24,21 @@ public class Message {
     private Integer id;
     private String text;
     private String tag;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
 
-    public Message(final String text, final String tag) {
+    public Message(final String text, final String tag, User user) {
         this.text = text;
         this.tag = tag;
+        this.author = user;
     }
 
     public Message() {
+    }
+
+    public String getAuthorName() {
+        return this.author != null ? this.author.getUsername() : "NONE";
     }
 
     public Integer getId() {
@@ -53,4 +64,13 @@ public class Message {
     public void setTag(final String tag) {
         this.tag = tag;
     }
+
+    public User getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(final User author) {
+        this.author = author;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.boot.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 /**
  * Role.
  *
@@ -7,6 +9,11 @@ package com.boot.model;
  * @version 5.0
  * @since 9/2/2020
  */
-public enum Role {
-    USER
+public enum Role implements GrantedAuthority {
+    USER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

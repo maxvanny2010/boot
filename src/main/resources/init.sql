@@ -9,7 +9,10 @@ create table IF NOT EXISTS usr
     password varchar(2000)        not null,
     enabled  boolean
 );
-
+insert into usr(id_user, username, password, enabled)
+values (1, 'a', '1', true),
+       (2, 'b', '1', true),
+       (3, 'c', '1', true);
 create table IF NOT EXISTS user_role
 (
     roles   varchar(2000) not null,
@@ -20,11 +23,12 @@ create table IF NOT EXISTS message
 (
     id_message serial primary key not null,
     text       varchar(2000)      not null,
-    tag        varchar(2000)      not null
+    tag        varchar(2000)      not null,
+    user_id    int4               not null REFERENCES usr (id_user) on delete cascade
 );
-insert into message(text, tag)
-VALUES ('da', 'one'),
-       ('dd', 'one'),
-       ('xx', 'two'),
-       ('xy', 'two'),
-       ('xy', 'three');
+insert into message(text, tag, user_id)
+VALUES ('aaa', 'one', 1),
+       ('aaa', 'one', 1),
+       ('bbb', 'two', 2),
+       ('bbb', 'two', 2),
+       ('ccc', 'three', 3);

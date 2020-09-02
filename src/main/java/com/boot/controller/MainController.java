@@ -1,14 +1,18 @@
 package com.boot.controller;
 
 import com.boot.model.Message;
+import com.boot.model.User;
 import com.boot.repos.MessageRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * GreetingController.
@@ -31,28 +35,26 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String main(Map<String, Object> model) {
-        final Iterable<Message> messages = this.repo.findAll();
-        model.put("messages", messages);
+    public String main(Model model,
+                       @RequestParam(name = "filter", required = false) String filter) {
+        Iterable<Message> messages = this.repo.findAll();
+        if (!Objects.isNull(filter) && !filter.isEmpty()) {
+            messages = this.repo.findByTag(filter);
+            model.addAttribute("filter", filter);
+        }
+        model.addAttribute("messages", messages);
+        model.addAttribute("filter", "");
         return "main";
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam("text") String text,
+    public String add(@AuthenticationPrincipal User user,
+                      @RequestParam("text") String text,
                       @RequestParam("tag") String tag,
                       Map<String, Object> model) {
-        this.repo.save(new Message(text, tag));
+        final Message message = new Message(text, tag, user);
+        this.repo.save(message);
         final Iterable<Message> messages = this.repo.findAll();
-        model.put("messages", messages);
-        return "main";
-    }
-
-    @PostMapping("filter")
-    public String filter(@RequestParam("filter") String filter, Map<String, Object> model) {
-        List<Message> messages = this.repo.findByTag(filter);
-        if (messages.isEmpty()) {
-            messages = (List<Message>) this.repo.findAll();
-        }
         model.put("messages", messages);
         return "main";
     }
