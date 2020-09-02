@@ -1,4 +1,4 @@
-package com.boot;
+package com.boot.controller;
 
 import com.boot.model.Message;
 import com.boot.repos.MessageRepository;
@@ -18,29 +18,26 @@ import java.util.Map;
  * @since 9/2/2020
  */
 @Controller
-public class GreetingController {
+public class MainController {
     private final MessageRepository repo;
 
-    public GreetingController(final MessageRepository repo) {
+    public MainController(final MessageRepository repo) {
         this.repo = repo;
     }
 
-    @GetMapping("/greeting")
-    public String greeting(
-            @RequestParam(name = "name", required = false, defaultValue = "World") String name,
-            Map<String, Object> model) {
-        model.put("name", name);
+    @GetMapping("/")
+    public String greeting() {
         return "greeting";
     }
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Map<String, Object> model) {
         final Iterable<Message> messages = this.repo.findAll();
         model.put("messages", messages);
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String add(@RequestParam("text") String text,
                       @RequestParam("tag") String tag,
                       Map<String, Object> model) {

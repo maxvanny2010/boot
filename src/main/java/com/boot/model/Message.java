@@ -1,5 +1,6 @@
 package com.boot.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,9 +17,18 @@ import javax.persistence.Id;
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_message")
     private Integer id;
     private String text;
     private String tag;
+
+    public Message(final String text, final String tag) {
+        this.text = text;
+        this.tag = tag;
+    }
+
+    public Message() {
+    }
 
     public Integer getId() {
         return id;
@@ -42,13 +52,5 @@ public class Message {
 
     public void setTag(final String tag) {
         this.tag = tag;
-    }
-
-    public Message(final String text, final String tag) {
-        this.text = text;
-        this.tag = tag;
-    }
-
-    public Message() {
     }
 }
