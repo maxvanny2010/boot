@@ -1,26 +1,21 @@
 <#macro login path name>
     <form action=${path} method="post">
-        <table>
-            <tr>
-                <td>User Name</td>
-                <td><label> <input type="text" name="username" required></label>
-                <td>
-            </tr>
-            <tr>
-                <td>Password</td>
-                <td><label><input type="password" name="password" required></label></td>
-            </tr>
-            <tr>
-                <td><input type="hidden" name="_csrf" value="${_csrf.token}" required></td>
-                <td><input type="submit" value=${name}></td>
-            </tr>
-        </table>
+        <div class="form-group">
+            <label for="username">Логин
+                <input type="text" class="form-control" name="username" required></label>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль
+                <input type="password" class="form-control" name="password" required>
+            </label>
+        </div>
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+        <button type="submit" class="btn btn-primary">${name}</button>
     </form>
-
 </#macro>
 <#macro  logout>
     <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <button type="submit">Выйти</button>
+        <button type="submit" class="btn btn-primary">Выйти</button>
     </form>
 </#macro>

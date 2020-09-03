@@ -1,7 +1,7 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/link.ftlh" as l>
 <@c.page>
-    <@l.link '/user' 'к списку' 'Редактирование данных пользователя'/>
+    <@l.link '/user' 'к списку'/>
     <div>
         <form action="/user" method="post">
             <label> <input type="text" name="username" value="${user.username}"> </label>

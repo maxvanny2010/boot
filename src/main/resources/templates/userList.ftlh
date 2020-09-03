@@ -1,7 +1,7 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/link.ftlh" as l>
 <@c.page>
-    <@l.link '/main' 'Главная' 'Список пользователей'/>
+    <@l.link '/main' 'Главная'/>
     <table>
         <thead>
         <tr>
