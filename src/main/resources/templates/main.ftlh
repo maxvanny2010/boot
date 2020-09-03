@@ -6,10 +6,11 @@
         <span><a href="/user">UserList</a></span>
     </div>
     <div>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <input type="hidden" name="_csrf" value="${_csrf.token}">
             <label> <input type="text" name="text" placeholder="Введите сообщение"> </label>
             <label> <input type="text" name="tag" placeholder="Тэг"> </label>
+            <input type="file" name="file">
             <button type="submit">Добавить</button>
         </form>
     </div>
@@ -31,6 +32,13 @@
                 <TD><span>${message.text}</span></TD>
                 <TD><i>${message.tag}</i></TD>
                 <TD><strong>${message.authorName}</strong></TD>
+                <TD>
+                    <div>
+                        <#if message.filename??>
+                            <img src="/img/${message.filename}" alt="pic">
+                        </#if>
+                    </div>
+                </TD>
             </tr>
         <#else>
             No message

@@ -1,11 +1,12 @@
 <#import "parts/common.ftlh" as c>
+<#import "parts/link.ftlh" as l>
 <@c.page>
-    List of users
+    <@l.link '/main' 'Главная' 'Список пользователей'/>
     <table>
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Role</th>
+            <th>Имя</th>
+            <th>Роль</th>
             <th></th>
         </tr>
         </thead>
@@ -16,7 +17,7 @@
                 <td><#list u.roles as role>${role}<#sep>, </#list></td>
                 <td><a href="/user/${u.id}">edit</a></td>
             </tr>
-        <#else>list empty
+        <#else>Список пустой
         </#list>
         </tbody>
     </table>
