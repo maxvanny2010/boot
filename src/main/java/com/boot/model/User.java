@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_user")
-    private Integer id;
+    private Long id;
     private String username;
     private String password;
     private boolean enabled;
@@ -51,11 +51,11 @@ public class User implements UserDetails {
     }
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
