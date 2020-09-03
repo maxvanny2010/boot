@@ -18,7 +18,10 @@ create table IF NOT EXISTS user_role
     roles   varchar(2000) not null,
     user_id int4          not null REFERENCES usr (id_user) on delete cascade
 );
-
+insert into user_role(roles, user_id)
+VALUES ('USER', 1),
+       ('USER', 2),
+       ('USER', 3);
 create table IF NOT EXISTS message
 (
     id_message serial primary key not null,

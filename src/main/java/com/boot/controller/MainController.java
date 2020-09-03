@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -36,14 +35,15 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(Model model,
-                       @RequestParam(name = "filter", required = false) String filter) {
-        Iterable<Message> messages = this.repo.findAll();
+                       @RequestParam(name = "filter", required = false, defaultValue = "") String filter) {
+        Iterable<Message> messages;
         if (!Objects.isNull(filter) && !filter.isEmpty()) {
             messages = this.repo.findByTag(filter);
-            model.addAttribute("filter", filter);
+        } else {
+            messages = this.repo.findAll();
         }
         model.addAttribute("messages", messages);
-        model.addAttribute("filter", "");
+        model.addAttribute("filter", filter);
         return "main";
     }
 

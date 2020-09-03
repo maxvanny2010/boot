@@ -19,7 +19,7 @@ import java.util.Objects;
  * @version 5.0
  * @since 9/2/2020
  */
-@Controller()
+@Controller
 @RequestMapping("/registration")
 public class RegistrationController {
     private final UserRepository users;
@@ -34,11 +34,7 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String enter(
-            User users, Model model
-         /*   @RequestParam(name = "username") String name,
-            @RequestParam(name = "password") String password,*/
-    ) {
+    public String enter(User users, Model model) {
         final User usr = this.users.findByUsername(users.getUsername());
         if (Objects.isNull(usr)) {
             final User user = new User();
@@ -46,7 +42,6 @@ public class RegistrationController {
             user.setPassword(users.getPassword());
             user.setEnabled(true);
             user.setRoles(Collections.singleton(Role.USER));
-
             final String path = "redirect:/login";
             try {
                 this.users.save(user);
