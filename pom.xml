@@ -16,6 +16,9 @@
 
     <properties>
         <java.version>14</java.version>
+        <!-- Web dependencies -->
+        <webjars-bootstrap.version>3.3.6</webjars-bootstrap.version>
+        <webjars-jquery.version>1.11.1</webjars-jquery.version>
     </properties>
 
     <dependencies>
