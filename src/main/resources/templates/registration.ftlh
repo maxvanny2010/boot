@@ -5,5 +5,5 @@
     <div style="color: #ff0000; font-size: smaller">
         ${message!""}
     </div>
-    <@o.login "/registration" "Регистрация"/>
+    <@o.login "/registration" "Регистрация" true/>
 </@c.page>

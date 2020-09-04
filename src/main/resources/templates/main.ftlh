@@ -59,7 +59,7 @@
                     </div>
                     <div class="card-footer text-muted">
                         <#if message.filename??>
-                            <img style="width:50px; height:50px" class="card-img-top" src="/img/${message.filename}"
+                            <img style="width:50px; height:50px" class="card-img-top" src="img/${message.filename}"
                                  alt="pic">
                         </#if>
                         ${message.authorName}
