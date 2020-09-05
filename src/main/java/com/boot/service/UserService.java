@@ -6,6 +6,7 @@ import com.boot.repos.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -28,10 +29,12 @@ import java.util.stream.Collectors;
 public class UserService implements UserDetailsService {
     private final UserRepository users;
     private final MailSender mails;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(final UserRepository users, final MailSender mails) {
+    public UserService(final UserRepository users, final MailSender mails, final PasswordEncoder passwordEncoder) {
         this.users = users;
         this.mails = mails;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -47,6 +50,7 @@ public class UserService implements UserDetailsService {
         user.setEnabled(false);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         try {
             this.users.save(user);
         } catch (Exception e) {
@@ -105,7 +109,7 @@ public class UserService implements UserDetailsService {
             }
         }
         if (!StringUtils.isEmpty(password)) {
-            user.setPassword(password);
+            user.setPassword(this.passwordEncoder.encode(password));
         }
         this.users.save(user);
         if (isEmailChange) {
