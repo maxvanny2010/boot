@@ -21,7 +21,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_message")
-    private Integer id;
+    private Long id;
     private String text;
     private String tag;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -42,11 +42,11 @@ public class Message {
         return this.author != null ? this.author.getUsername() : "NONE";
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final Integer id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 
