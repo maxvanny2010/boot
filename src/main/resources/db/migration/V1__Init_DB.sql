@@ -21,7 +21,7 @@ create sequence hibernate_sequence start 1 increment 1;
 
 create table message
 (
-    id_message int8  not null,
+    id_message int8          not null,
     filename   varchar(255),
     tag        varchar(255),
     text       varchar(2048) not null,
@@ -39,12 +39,12 @@ create table user_role
 
 create table usr
 (
-    id_user         int8    not null,
+    id_user         int8         not null,
     activation_code varchar(255),
     email           varchar(255),
-    enabled         boolean not null,
-    password        varchar(255)not null,
-    username        varchar(255)not null,
+    enabled         boolean      not null,
+    password        varchar(255) not null,
+    username        varchar(255) not null,
     primary key (id_user)
 );
 

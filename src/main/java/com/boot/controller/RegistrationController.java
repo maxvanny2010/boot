@@ -4,10 +4,15 @@ import com.boot.model.User;
 import com.boot.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * RegistrationController.
@@ -31,9 +36,23 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String addUser(User user, Model model) {
+    public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
+        Map<String, String> map = new HashMap<>();
+        model.addAttribute("user", user);
+        if (user.getPassword() != null && !user.getPassword2().equals(user.getPassword())) {
+            map.put("password2Error", "Пароли не совпадают.");
+            model.addAttribute("map", map);
+            return "registration";
+        }
+        if (bindingResult.hasErrors()) {
+            final Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+            map.putAll(errors);
+            model.addAttribute("map", map);
+            return "registration";
+        }
         if (!this.users.addUser(user)) {
-            model.addAttribute("message", "login is busy");
+            map.put("usernameError", "Логин занят");
+            model.addAttribute("map", map);
             return "registration";
         }
         return "redirect:/login";

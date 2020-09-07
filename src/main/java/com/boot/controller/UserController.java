@@ -63,6 +63,7 @@ public class UserController {
         model.addAttribute("email", user.getEmail());
         return "profile";
     }
+
     @PostMapping("profile")
     public String updateProfile(
             @AuthenticationPrincipal User user,
