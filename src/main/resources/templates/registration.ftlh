@@ -3,6 +3,17 @@
 <@c.page>
     <form action='/registration' method="post">
         <div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-6">
+                <div class="g-recaptcha" data-sitekey="6Led6coZAAAAAGdpT0Mn8C6vsgumbkfArwA4KIX7"></div>
+                <#if (map['captchaError'])??>
+                    <div class="alert alert-${map['messageType']}" role="alert">
+                        <strong>${map['captchaError']}</strong>
+                    </div>
+                </#if>
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="username" class="col-sm-2 col-form-label">Логин</label>
             <div class="col-sm-6">
                 <input type="text" class="form-control <#if (map['usernameError'])??>is-invalid</#if>"
