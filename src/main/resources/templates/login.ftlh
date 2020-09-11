@@ -1,8 +1,10 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
-    <div style="color: #ff0000; font-size: smaller">
-        ${message!}
-    </div>
+    <#if message??>
+        <div class="alert alert-${messageType}" role="alert">
+            ${message}
+        </div>
+    </#if>
     <form action='/login' method="post">
         <div class="form-group row">
             <label for="username" class="col-sm-2 col-form-label">Логин</label>
