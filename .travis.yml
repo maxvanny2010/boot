@@ -1,0 +1,31 @@
+language: java
+jdk: openjdk14
+
+sudo: false
+
+install: true
+
+script: mvn clean package -DskipTests=true
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database boot;' -U postgres
+
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  email:
+    recipients:
+      - david.klarson@mail.com
+    on_success: never
+    on_failure: always
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: NGuI5USQ3Cq59Ar3zInR3Y2QVPPsvGmsfMJdtpYhxd3+Z7lqpK6vn65gD869t3uRXUXwZK7rzh7Q9kx3lNAr+93MEbVG4U62qTCnwNu8JUBUiGT0XkjpNo7tJfwAtntxo4uWSLY1E+5+TeXejRW5ZIjIPq7fSI9lVOjDCuwiZ50f2AgM9Jg9UrueTHVRxxbVuMg2MGHdxJW9zwnykZlKf3AJDfCqskhZmvH4qAdi7ON2usQhg3DNjJ0W1jxMwgxyCgesu6gKKYDlDJH7hLMKxNF9DYM/Odub4OPKdTo1Fhsv6cZQdXvaVXtEcIFRBVXUxGIgtMfTN4pgp1PjLObRLmH/TLPkAIKPWX/LUImbgeA5i3APP2zeWO5z70vDjMoPvmqP/pupEV3KMZl2PvXrcbS+XgTBxt7HRpf3gZkkBnCAKN6Gg+Am6sTlNEfFvwAlfBua+JTih1M3Qs/1xj7CUv3ciUs9qmDT0zqWM10STzojr++IrLM8jaAp3JTgn2ADmVLWMrj68cjjbfMYF8OEemG1YWq4mPCIBurNkfV9wTh76DFJNL9UrQ90EDaN7AlX6qSXkOp+r8Hv6uEeC6CJBWhG8wCySTZiDhyE4GlVWLbOYp/EKrcMF+jTG1jBQSa9yl3BsZ+TXE+nxEFOVqMUuDQCuoXAOtobxHTFllsLyyo=
+  app: bootforum
