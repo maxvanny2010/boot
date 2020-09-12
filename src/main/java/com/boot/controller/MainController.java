@@ -3,7 +3,7 @@ package com.boot.controller;
 import com.boot.model.Message;
 import com.boot.model.User;
 import com.boot.repos.MessageRepository;
-import org.springframework.beans.factory.annotation.Value;
+import com.boot.util.Util;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 /**
  * GreetingController.
@@ -30,8 +28,6 @@ import java.util.UUID;
 @Controller
 public class MainController {
     private final MessageRepository repo;
-    @Value("${upload.path}")
-    private String uploadPath;
 
     public MainController(final MessageRepository repo) {
         this.repo = repo;
@@ -69,13 +65,7 @@ public class MainController {
             model.addAttribute("message", message);
         } else {
             if (Objects.nonNull(file) && !file.isEmpty()) {
-                final File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) {
-                    final boolean dir = uploadDir.mkdirs();
-                }
-                final String uuidFile = UUID.randomUUID().toString();
-                final String resultFileName = uuidFile + "." + file.getOriginalFilename();
-                file.transferTo(new File(uploadPath + "/" + resultFileName));
+                final String resultFileName = Util.getPhoto(file);
                 message.setFilename(resultFileName);
             }
             this.repo.save(message);
@@ -85,6 +75,5 @@ public class MainController {
         model.addAttribute("messages", messages);
         return "main";
     }
-
 
 }
