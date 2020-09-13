@@ -2,7 +2,11 @@ package com.boot.controller;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -21,5 +25,10 @@ public class ControllerUtils {
                 fieldError -> fieldError.getField() + "Error",
                 FieldError::getDefaultMessage);
         return bindingResult.getFieldErrors().stream().collect(collector);
+    }
+
+    public static String savePhoto(final MultipartFile file) throws IOException {
+        final ByteArrayInputStream bis = new ByteArrayInputStream(file.getBytes());
+        return Base64.getEncoder().encodeToString(bis.readAllBytes());
     }
 }

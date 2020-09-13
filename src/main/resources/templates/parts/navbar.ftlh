@@ -19,9 +19,14 @@
                     <a class="nav-link" href="/registration">Регистрация</a>
                 </li>
             </#if>
-            <li class="nav-item">
-                <a class="nav-link" href="/main">Сообщения</a>
-            </li>
+            <#if user??>
+                <li class="nav-item">
+                    <a class="nav-link" href="/main">Сообщения</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user-messages/${currentUserId}">Мои сообщения</a>
+                </li>
+            </#if>
             <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link" href="/user">Список подписчиков</a>

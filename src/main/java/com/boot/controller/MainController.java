@@ -2,13 +2,14 @@ package com.boot.controller;
 
 import com.boot.model.Message;
 import com.boot.model.User;
+import com.boot.model.dto.MessageDto;
 import com.boot.repos.MessageRepository;
-import com.boot.util.Util;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * GreetingController.
@@ -65,15 +67,63 @@ public class MainController {
             model.addAttribute("message", message);
         } else {
             if (Objects.nonNull(file) && !file.isEmpty()) {
-                final String resultFileName = Util.getPhoto(file);
+                final String resultFileName = ControllerUtils.savePhoto(file);
                 message.setFilename(resultFileName);
             }
             this.repo.save(message);
 
         }
-        final Iterable<Message> messages = this.repo.findAll();
-        model.addAttribute("messages", messages);
+        model.addAttribute("messages", this.repo.findAll());
         return "main";
     }
 
+    @GetMapping("/user-messages/{user}")
+    public String userMessages(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable User user,
+            @RequestParam(value = "message", required = false) Message message,
+            Model model) {
+        final Set<Message> messages = user.getMessages();
+        model.addAttribute("isCurrentUser", currentUser.equals(user));
+        if (Objects.nonNull(message)) {
+            model.addAttribute("message", message);
+            return "update";
+        }
+        model.addAttribute("messages", messages);
+        return "userMessages";
+    }
+
+    @PostMapping("/user-messages/{user}")
+    public String updateMessage(@AuthenticationPrincipal User currentUser,
+                                @Valid MessageDto messageDto,
+                                BindingResult bindingResult,
+                                Model model,
+                                @PathVariable Long user,
+                                @RequestParam("file") MultipartFile file) {
+        if (bindingResult.hasErrors()) {
+            final Map<String, String> map = ControllerUtils.getErrors(bindingResult);
+            model.addAttribute("map", map);
+            model.addAttribute("message", messageDto);
+            return "update";
+        }
+        this.repo.findById(messageDto.getId()).ifPresent(message ->
+        {
+            if (message.getAuthor().equals(currentUser)) {
+                if (Objects.nonNull(file) && !file.isEmpty()) {
+                    final String resultFileName;
+                    try {
+                        resultFileName = ControllerUtils.savePhoto(file);
+                        message.setFilename(resultFileName);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                message.setText(messageDto.getText());
+                message.setTag(messageDto.getTag());
+                this.repo.save(message);
+            }
+        });
+
+        return String.format("redirect:/user-messages/%d", user);
+    }
 }

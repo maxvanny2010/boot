@@ -1,5 +1,4 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/link.ftlh" as l>
 <@c.page>
     <form action='/registration' method="post">
         <div class="form-group row">
