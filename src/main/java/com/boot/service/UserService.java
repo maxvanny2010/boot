@@ -119,4 +119,14 @@ public class UserService implements UserDetailsService {
             this.sentMessage(user);
         }
     }
+
+    public void subscribe(final User currentUser, final User user) {
+        user.getSubscribers().add(currentUser);
+        this.users.save(user);
+    }
+
+    public void unsubscribe(final User currentUser, final User user) {
+        user.getSubscribers().remove(currentUser);
+        this.users.save(user);
+    }
 }

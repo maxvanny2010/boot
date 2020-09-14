@@ -1,5 +1,6 @@
 package com.boot.model;
 
+import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
@@ -35,6 +36,7 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+    @Type(type = "text")
     private String filename;
 
     public Message(final String text, final String tag, User user) {
