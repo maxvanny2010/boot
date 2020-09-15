@@ -5,6 +5,8 @@ alter table if exists message
 alter table if exists user_role
     drop constraint if exists user_role_fk;
 
+drop table if exists user_subscriptions;
+
 
 drop table if exists message cascade;
 
