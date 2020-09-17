@@ -77,6 +77,18 @@ public class MainController {
         return "main";
     }
 
+    @GetMapping("/user-messages/edit/{user}")
+    public String editMessages(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable User user,
+            @RequestParam(value = "message", required = false) Message message,
+            Model model) {
+        if (Objects.nonNull(message)) {
+            model.addAttribute("message", message);
+            return "update";
+        }
+        return "userMessages";
+    }
     @GetMapping("/user-messages/{user}")
     public String userMessages(
             @AuthenticationPrincipal User currentUser,
@@ -96,8 +108,19 @@ public class MainController {
         model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         return "userMessages";
     }
+    @GetMapping("/user-messages/delete/{user}")
+    public String deleteMessages(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable User user,
+            @RequestParam(value = "message", required = false) Message message,
+            Model model) {
+        this.repo.delete(message);
+        final Set<Message> messages = user.getMessages();
+        model.addAttribute("messages", messages);
+        return "redirect:/main";
+    }
 
-    @PostMapping("/user-messages/{user}")
+    @PostMapping("/user-messages/edit/{user}")
     public String updateMessage(@AuthenticationPrincipal User currentUser,
                                 @Valid MessageDto messageDto,
                                 BindingResult bindingResult,

@@ -16,8 +16,12 @@
                            href="/user-messages/${message.author.id}">${message.authorName}</a>
                         <#if message.author.id == currentUserId>
                             <a class="btn btn-primary"
-                               href="/user-messages/${message.author.id}?message=${message.id}">
+                               href="/user-messages/edit/${message.author.id}?message=${message.id}">
                                 Редактировать
+                            </a>
+                            <a class="btn btn-primary" style="margin-left: 2px"
+                               href="/user-messages/delete/${message.author.id}?message=${message.id}">
+                                Удалить
                             </a>
                         </#if>
                     </div>
