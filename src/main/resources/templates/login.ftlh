@@ -23,4 +23,5 @@
             <button type="submit" class="btn btn-primary">Войти</button>
         </div>
     </form>
+    <span>login: 'admin' pass: '1' </span>
 </@c.page>
