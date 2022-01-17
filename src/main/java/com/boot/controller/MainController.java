@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * GreetingController.
@@ -89,6 +86,7 @@ public class MainController {
         }
         return "userMessages";
     }
+
     @GetMapping("/user-messages/{user}")
     public String userMessages(
             @AuthenticationPrincipal User currentUser,
@@ -108,6 +106,7 @@ public class MainController {
         model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         return "userMessages";
     }
+
     @GetMapping("/user-messages/delete/{user}")
     public String deleteMessages(
             @AuthenticationPrincipal User currentUser,

@@ -20,12 +20,6 @@ after_success:
 notifications:
   email:
     recipients:
-      - david.klarson@mail.co
+      - davidklarson@mail.co
     on_success: never
     on_failure: always
-
-deploy:
-  provider: heroku
-  api_key:
-    secure: TwQVL8C+BqC8Rp8b4Bfvim6iW9EfgLPFsckNdpFe1VILTeUlavuJLtl27u3I1o3MNk89XCVQtXhgxzc3kmvlyZe4z8nPSk7ApxBIZvROwGfOdelAotUM9kd7J5EcEAXkyMh9/4tzpp0DXBEv7YUCF0WOUbenz7WAxWmeOedFgTaighJfA6vpkcrGg6UvEguc/jeFrK/T29V4jwaQfq37v4Ric59jIfrnKl4rtLzD5pxq9gxe0gb16TCaBJFf1LCmrP00sU1fKXGrSECu4AfJnKynQIMfYdM0eDsxNajx6LblDM5LTtW9kdCKoCroKHd4xg5dcEKah7i53L3XsgAynb20r+gM54qe+TQ7j4KtXWUHH4b3g25J+7F6FAnhKcT/oGCdxh/wsUfJfnCmBwTpeR+0MwlyMDWCxsoWClO8XNB2obJnxFr1+iayUPj57U2+N/Tds0suWtf8tWlLsHjr1eF25x0N3d3GUWP9S3xFpSChnl/LswdQJR5jQwDNaaBaGfW/70NNrtwZxjNUtDhuDt6uk4Ytw2nNZl1Z/NMb9sSAfrwL9fVy1NzHyt2RhzDo/D4Br1EFQlLeNnTLyUMGJ2aHlgCqc1ZXZymtE9/egOc8nrOMa+Kw5khPhu5Vb5bk0Ld+u3jyUJ0YYk8eLA41c/2/xNo3RsLYLmmtHPHFATg=
-  app: bootforum

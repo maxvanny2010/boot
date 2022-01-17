@@ -2,7 +2,6 @@ package com.boot.model.dto;
 
 import com.boot.model.User;
 import org.hibernate.validator.constraints.Length;
-
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

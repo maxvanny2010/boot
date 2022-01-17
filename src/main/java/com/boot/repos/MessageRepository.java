@@ -2,8 +2,7 @@ package com.boot.repos;
 
 import com.boot.model.Message;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
+import java.util.*;
 
 /**
  * MessageRepository.
